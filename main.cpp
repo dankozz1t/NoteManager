@@ -12,12 +12,9 @@ int main()
 	
     std::cout << "Планировщик заметок!\n";
 
-
+	//fdfdfd df 
 	Manager* m = new Manager();
-	m->create();
-	m->create();
-	m->create();
-	m->readAll();
+	m->ReadAll();
 
 
 
