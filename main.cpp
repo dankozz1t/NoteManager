@@ -17,6 +17,10 @@ int main()
 	m->create();
 	m->create();
 	m->create();
+	m->create();
+	m->create();
+	m->create();
+	m->create();
 	m->readAll();
 
 
