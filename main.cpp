@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include "Manager.h"
 
-
+// This is Drewsovsky's comment
 int main()
 {
 	SetConsoleTitleA("NoteManager");
@@ -12,7 +12,7 @@ int main()
 	
     std::cout << "Планировщик заметок!\n";
 
-	//fdfdfd df 
+
 	Manager* m = new Manager();
 	m->ReadAll();
 
