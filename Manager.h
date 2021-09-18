@@ -13,8 +13,6 @@ class Manager
 	 std::vector<Note*> notes;
 
 public:
-
-
 	void create();
 	void readAll();
 	
