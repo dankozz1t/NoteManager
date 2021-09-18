@@ -1,6 +1,10 @@
 ﻿#include <iostream>
 #include <Windows.h>
 
+#include "Manager.h"
+
+
+
 int main()
 {
 	SetConsoleTitleA("NoteManager");
@@ -9,6 +13,15 @@ int main()
 	setlocale(0, "");
 	
     std::cout << "Планировщик заметок!\n";
+
+
+	Manager* m = new Manager();
+	m->create();
+	m->create();
+	m->create();
+	m->readAll();
+
+
 
 	return 0;
 }
