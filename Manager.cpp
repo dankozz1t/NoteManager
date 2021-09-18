@@ -1,7 +1,9 @@
 ﻿#include "Manager.h"
+#include <string>
+#include <map>
 #include <iostream>
 
-void Manager::Create()
+void Manager::create()
 {
 	Note* note = new Note;
 
@@ -10,14 +12,11 @@ void Manager::Create()
 	notes.push_back(note);
 }
 
-void Manager::ReadAll()
+void Manager::readAll()
 {
+
 	for (auto& c : notes)
 		c->print();
 
 	system("pause");
-}
-
-void Manager::Delete()
-{
 }

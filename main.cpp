@@ -1,8 +1,10 @@
 ﻿#include <iostream>
 #include <Windows.h>
+
 #include "Manager.h"
 
-// This is Drewsovsky's comment
+
+
 int main()
 {
 	SetConsoleTitleA("NoteManager");
@@ -14,7 +16,10 @@ int main()
 
 
 	Manager* m = new Manager();
-	m->ReadAll();
+	m->create();
+	m->create();
+	m->create();
+	m->readAll();
 
 
 

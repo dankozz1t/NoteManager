@@ -142,13 +142,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Note.cpp" />
-    <ClCompile Include="Proir.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LOGS.h" />
     <ClInclude Include="Manager.h" />
     <ClInclude Include="Note.h" />
-    <ClInclude Include="Proir.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -24,9 +24,6 @@
     <ClCompile Include="Manager.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Proir.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Note.h">
@@ -36,9 +33,6 @@
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="LOGS.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="Proir.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
