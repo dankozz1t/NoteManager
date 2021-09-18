@@ -2,7 +2,7 @@
 #include <Windows.h>
 #include "Manager.h"
 
-
+// This is Drewsovsky's comment
 int main()
 {
 	SetConsoleTitleA("NoteManager");
