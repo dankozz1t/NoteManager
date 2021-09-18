@@ -3,7 +3,6 @@
 #include <iostream>
 #include "LOGS.h"
 
-
 Note::Note() {}
 Note::~Note() {}
 
@@ -41,8 +40,6 @@ void Note::print()
 	std::cout << " | --------  --------";
 	std::cout << "\n | " << this->getNote();
 	std::cout << "\n * --------  --------\n";
-
-
 }
 
 void Note::setState(INoteState* state)
@@ -76,8 +73,6 @@ void DeferredNote::next(Note* note)
 	note->setState(new ActiveNote);
 	note->setDateNow(note);
 }
-
-
 
 void ActiveNote::printDate(Note* note)
 {

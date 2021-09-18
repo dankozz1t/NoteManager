@@ -1,8 +1,6 @@
 ﻿#include <iostream>
 #include <Windows.h>
-
 #include "Manager.h"
-
 
 
 int main()
