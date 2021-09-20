@@ -1,9 +1,8 @@
 ﻿#include <iostream>
 #include <Windows.h>
-
 #include "Manager.h"
 
-
+using namespace std;
 
 int main()
 {
@@ -11,15 +10,25 @@ int main()
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	setlocale(0, "");
-	
-    std::cout << "Планировщик заметок!\n";
 
 
 	Manager* m = new Manager();
-	m->create();
-	m->create();
-	m->create();
-	m->readAll();
+	m->createNote();
+	//m->createNote();
+	//m->createNote();
+	//
+	//m->setImportant();
+	m->setImportant();
+
+	//m->deleteNote();
+
+
+	cout << "\nПринт важные: " << endl;
+	m->printImportant();
+
+	cout << "\nПринт все: "<< endl;
+	m->printAllNote();
+
 
 
 

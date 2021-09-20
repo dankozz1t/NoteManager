@@ -16,27 +16,40 @@ public:
 class Note
 {
 	INoteState* state = nullptr;
-
+	tm date;
+	
 	std::string tag;
 	std::string note;
-	std::string date;
+	
+	bool important;
+
 public:
 	Note();
 	~Note();
 
-	std::string getTag();
-	std::string getNote();
-	std::string getDate();
-	INoteState* getState();
-
-	void setDateNow(Note* note);
-
+	//std::string getTag();
+	//std::string getNote();
+	//tm getDate();
+	//INoteState* getState();
+	
 	void create();
 	
+	bool isImportant();
+	void tickImportant();
+	
+	void printDate();
+	std::string printDateS();
+	
+	void setDate();
+	void setNote();
+	void setTag();
+	//void deleteN();
+
+	
 	void print();
+	std::string printS();
 
-	void setState(INoteState* state);
-
+	void setState(INoteState* state); 
 	
 	void next(Note* note);
 	void previous(Note* note);
@@ -57,7 +70,6 @@ public:
 class ActiveNote : public INoteState
 {
 public:
-
 	void printDate(Note* note) override;
 
 	void next(Note* note) override;
