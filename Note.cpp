@@ -3,30 +3,22 @@
 #include <iostream>
 #include "LOGS.h"
 
-void setColor(int text = 7, int background = 0)
+void Note::create()
 {
-	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hStdOut, (WORD)((background << 4) | text));
+	this->setState(new ActiveNote);
+	important = false;
+
+	std::cout << "\nВведите тэг: # ";
+	std::getline(std::cin, this->tag);
+
+	std::cout << "Введите заметку: ";
+	std::getline(std::cin, this->note);
+
+	setDate();
 }
 
-
-Note::Note() {}
-Note::~Note() {}
-
-//std::string Note::getTag() { return tag; }
-//std::string Note::getNote() { return note; }
-//tm Note::getDate() { return date; }
-//INoteState* Note::getState() { return state; }
-
-bool Note::isImportant()
-{
-	return important;
-}
-
-void Note::tickImportant()
-{
-	important = true;
-}
+bool Note::isImportant() { return important; }
+void Note::markAsImportant() { important = true; }
 
 void Note::printDate()
 {
@@ -57,6 +49,23 @@ std::string Note::printDateS()
 	return str;
 }
 
+
+void Note::print()
+{
+	std::cout << "\n * Тэг # " << tag;
+
+	state->printDate(this);
+	std::cout << " | --------  --------";
+	std::cout << "\n | " << note;
+	std::cout << "\n * --------  --------\n";
+}
+
+std::string Note::printS()
+{
+	return std::string("# " + tag + " | " + note + " | " + printDateS());
+}
+
+
 void Note::setDate()
 {
 	std::cout << "0 - Поставить дату сейчас | 1 - Ввести свою дату " << std::endl;
@@ -81,20 +90,6 @@ void Note::setDate()
 	std::cin.ignore();
 }
 
-void Note::create()
-{
-	this->setState(new ActiveNote);
-	important = false;
-
-	std::cout << "\nВведите тэг: # ";
-	std::getline(std::cin, this->tag);
-
-	std::cout << "Введите заметку: ";
-	std::getline(std::cin, this->note);
-
-	setDate();
-}
-
 void Note::setNote()
 {
 	std::cout << "Введите заметку: ";
@@ -107,42 +102,25 @@ void Note::setTag()
 	std::getline(std::cin, this->tag);
 }
 
-void Note::print()
-{
-	if (important)
-		setColor(6, 0);
-	else
-		setColor(15, 0);
-
-	std::cout << "\n * Тэг # " << tag;
-
-	state->printDate(this);
-	std::cout << " | --------  --------";
-	std::cout << "\n | " << note;
-	std::cout << "\n * --------  --------\n";
-
-	setColor(15, 0);
-}
-
-std::string Note::printS()
-{
-	return std::string("# " + tag + " | " + note + " | " + printDateS());
-}
-
 void Note::setState(INoteState* state)
 {
-	delete this->state;
+	if (this->state) delete this->state;
 	this->state = state;
 }
+
+std::string Note::currentState() { return state->currentState(); }
 
 void Note::next(Note* note) { state->next(this); }
 void Note::previous(Note* note) { state->previous(this); }
 
 
+
 void DeferredNote::printDate(Note* note)
 {
-	std::cout << " | Отложенное: "; note->printDate();
+	std::cout << " | ОТЛОЖЕННАЯ | Дата: "; note->printDate();
 }
+
+std::string DeferredNote::currentState() { return "DeferredNote"; }
 
 void DeferredNote::previous(Note* note)
 {
@@ -159,16 +137,16 @@ void DeferredNote::next(Note* note)
 
 	note->setState(new ActiveNote);
 	note->setDate();
-
 }
 
 
 
 void ActiveNote::printDate(Note* note)
 {
-	std::cout << " | Дата: "; note->printDate();
-
+	std::cout << " | АКТИВНАЯ | Дата: "; note->printDate();
 }
+
+std::string ActiveNote::currentState() { return "ActiveNote"; }
 
 void ActiveNote::previous(Note* note)
 {
@@ -178,7 +156,6 @@ void ActiveNote::previous(Note* note)
 	note->setState(new DeferredNote);
 	note->setDate();
 }
-
 
 void ActiveNote::next(Note* note)
 {
@@ -193,9 +170,10 @@ void ActiveNote::next(Note* note)
 
 void CompletedNote::printDate(Note* note)
 {
-	std::cout << " | Завершенное: "; note->printDate();
-
+	std::cout << " | ЗАВЕРШЕННОЕ | Дата: "; note->printDate();
 }
+
+std::string CompletedNote::currentState() { return "CompletedNote"; }
 
 void CompletedNote::previous(Note* note)
 {
