@@ -12,22 +12,27 @@ int main()
 	setlocale(0, "");
 
 
-	Manager* m = new Manager();
-	m->createNote();
-	//m->createNote();
-	//m->createNote();
-	//
-	//m->setImportant();
-	m->setImportant();
+	Manager* manager = new Manager();
+	manager->createNote();
 
-	//m->deleteNote();
+	cout << "\nСоздание и в отложегын: " << endl;
+	manager->createNote();
+	manager->previousNote();
+
+	cout << "\nСоздание и в Завершенные: " << endl;
+	manager->createNote();
+	manager->nextNote();
 
 
-	cout << "\nПринт важные: " << endl;
-	m->printImportant();
+	cout << "\nСоздание и отметить как важное: " << endl;
+	manager->createNote();
+	manager->markAsImportant();
+
+	cout << "\nПринт активные: " << endl;
+	manager->printActivated();
 
 	cout << "\nПринт все: "<< endl;
-	m->printAllNote();
+	manager->printAllNotes();
 
 
 
