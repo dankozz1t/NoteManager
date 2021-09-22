@@ -14,28 +14,45 @@ void Manager::createNote()
 	notes.push_back(note);
 }
 
-void Manager::printAllNote()
+void Manager::printAllNotes()
+{
+	printImportant();
+	printActivated();
+	printDeferrend();
+	printCompleted();
+}
+
+void Manager::printNotes(std::string type, int color)
 {
 	for (auto& i : notes)
+	{
+		if (i->currentState() != type) continue;
+
+		SetColor(color, 0);
 		i->print();
-
-	system("pause");
+	}
 }
 
-void Manager::setImportant()
-{
-	int i = selectNotes();
-	importance.push_back(notes[i]);
-	notes[i]->tickImportant();
-}
+void Manager::printDeferrend() { printNotes("DeferredNote", 7); }
+void Manager::printActivated() { printNotes("ActiveNote", 15); }
+void Manager::printCompleted() { printNotes("CompletedNote", 8); }
 
 void Manager::printImportant()
 {
 	for (auto& i : importance)
+	{
+		SetColor(6, 0);
 		i->print();
-
-	system("pause");
+	}
 }
+
+void Manager::markAsImportant()
+{
+	int i = selectNotes();
+	importance.push_back(notes[i]);
+	notes[i]->markAsImportant();
+}
+
 
 int Manager::selectNotes()
 {
@@ -51,36 +68,28 @@ int Manager::selectNotes()
 	return mN.start();
 }
 
-void Manager::editNote()
-{
-	notes[selectNotes()]->setNote();
-}
+void Manager::previousNote() { int num = selectNotes(); notes[num]->previous(notes[num]); }
+void Manager::nextNote() { int num = selectNotes(); notes[num]->next(notes[num]); }
 
-void Manager::editTag()
-{
-	notes[selectNotes()]->setTag();
-}
 
-void Manager::editDate()
-{
-	notes[selectNotes()]->setDate();
-}
+void Manager::editNote() { notes[selectNotes()]->setNote(); }
+
+void Manager::editTag() { notes[selectNotes()]->setTag(); }
+
+void Manager::editDate() { notes[selectNotes()]->setDate(); }
+
 
 void Manager::deleteNote()
 {
 	int num = selectNotes();
-
 	if (notes[num]->isImportant())
 	{
-		for(int i =0; i < importance.size(); i++)
+		for (int i = 0; i < importance.size(); i++)
 		{
-			if(notes[num] == importance[i])
+			if (notes[num] == importance[i])
 				importance.erase(importance.begin() + i);
 		}
 	}
-
 	notes.erase(notes.begin() + num);
-
-	
 }
 
