@@ -10,7 +10,7 @@ public:
 	virtual void next(Note* note) = 0;
 	virtual void previous(Note* note) = 0;
 
-	virtual void printDate(Note* note) = 0;
+	virtual std::string printDate(Note * note) = 0;
 	virtual std::string currentState() = 0;
 };
 
@@ -26,16 +26,23 @@ class Note
 
 public:
 
+	void Load();
+	void Save(int i);
+
 	void create();
 
 	bool isImportant();
 	void markAsImportant();
 	
-	void printDate();
+	//void printDate();
 	std::string printDateS();
 
-	void print();
-	std::string printS();
+	std::string print();
+	std::string printCompr();
+
+	tm getDate();
+	std::string getTag();
+	std::string getNote();
 
 	void setDate();
 	void setNote();
@@ -54,7 +61,7 @@ public:
 class DeferredNote :public INoteState
 {
 public:
-	void printDate(Note* note) override;
+	std::string  printDate(Note* note) override;
 	std::string currentState() override;
 
 	void next(Note* note) override;
@@ -64,7 +71,7 @@ public:
 class ActiveNote : public INoteState
 {
 public:
-	void printDate(Note* note) override;
+	std::string  printDate(Note* note) override;
 	std::string currentState() override;
 
 	void next(Note* note) override;
@@ -75,7 +82,7 @@ public:
 class CompletedNote :public INoteState
 {
 public:
-	void printDate(Note* note) override;
+	std::string  printDate(Note* note) override;
 	std::string currentState() override;
 
 	void next(Note* note) override;

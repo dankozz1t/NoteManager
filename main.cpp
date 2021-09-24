@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "Manager.h"
 
+#include <fstream>
 using namespace std;
 
 int main()
@@ -14,8 +15,10 @@ int main()
 
 	Manager* manager = new Manager();
 	manager->createNote();
+	manager->createNote();
 
-	cout << "\nСоздание и в отложегын: " << endl;
+
+	cout << "\nСоздание и в отложегын: " << endl; 
 	manager->createNote();
 	manager->previousNote();
 
@@ -28,12 +31,20 @@ int main()
 	manager->createNote();
 	manager->markAsImportant();
 
-	cout << "\nПринт активные: " << endl;
-	manager->printActivated();
 
-	cout << "\nПринт все: "<< endl;
+	cout << "\nПринт все: " << endl;
 	manager->printAllNotes();
+	//
+	//cout << "\nПринт активные: " << endl;
+	//manager->printActivated();
 
+
+	//cout << "\nПоиск по дате: " << endl;
+	//manager->dateSearch();
+
+	//cout << "\nПринт все: "<< endl;
+	//manager->printAllNotes();
+	manager->Save();
 
 
 

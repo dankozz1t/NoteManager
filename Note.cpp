@@ -2,6 +2,20 @@
 #include <Windows.h>
 #include <iostream>
 #include "LOGS.h"
+#include <fstream>
+
+void Note::Load()
+{
+
+}
+
+void Note::Save(int i)
+{
+	std::ofstream out(i + "Note.txt");
+	out << "Работа с файлами в С++";
+	out.close();
+
+}
 
 void Note::create()
 {
@@ -20,18 +34,18 @@ void Note::create()
 bool Note::isImportant() { return important; }
 void Note::markAsImportant() { important = true; }
 
-void Note::printDate()
-{
-	if (date.tm_mday < 10) std::cout << "0";
-	std::cout << date.tm_mday << '.';
-	if (date.tm_mon < 10) std::cout << "0";
-	std::cout << date.tm_mon << '.';
-	std::cout << date.tm_year << " | ";
-	if (date.tm_hour < 10) std::cout << "0";
-	std::cout << date.tm_hour << ':';
-	if (date.tm_min < 10) std::cout << "0";
-	std::cout << date.tm_min << std::endl;
-}
+//void Note::printDate()
+//{
+//	if (date.tm_mday < 10) std::cout << "0";
+//	std::cout << date.tm_mday << '.';
+//	if (date.tm_mon < 10) std::cout << "0";
+//	std::cout << date.tm_mon << '.';
+//	std::cout << date.tm_year << " | ";
+//	if (date.tm_hour < 10) std::cout << "0";
+//	std::cout << date.tm_hour << ':';
+//	if (date.tm_min < 10) std::cout << "0";
+//	std::cout << date.tm_min << std::endl;
+//}
 
 std::string Note::printDateS()
 {
@@ -50,20 +64,28 @@ std::string Note::printDateS()
 }
 
 
-void Note::print()
+std::string Note::print()
 {
-	std::cout << "\n * Тэг # " << tag;
+	std::string noteST;
 
-	state->printDate(this);
-	std::cout << " | --------  --------";
-	std::cout << "\n | " << note;
-	std::cout << "\n * --------  --------\n";
+	noteST += "\n * Тэг # " + tag;
+	noteST += state->printDate(this);
+	noteST += " | --------  --------";
+	noteST += "\n | " + note;
+	noteST += "\n * --------  --------\n";
+	return noteST;
 }
 
-std::string Note::printS()
+std::string Note::printCompr()
 {
-	return std::string("# " + tag + " | " + note + " | " + printDateS());
+	//return  std::string("\n * Тэг # " + tag + state->currentState()+printDateS() + " | --------  --------"
+	//+ "\n | " + note + "\n * --------  --------\n");
+	return std::string("# " + tag + " | " + note + state->printDate(this));
 }
+
+tm Note::getDate() { return date; }
+std::string Note::getTag() { return tag; }
+std::string Note::getNote() { return note; }
 
 
 void Note::setDate()
@@ -115,9 +137,9 @@ void Note::previous(Note* note) { state->previous(this); }
 
 
 
-void DeferredNote::printDate(Note* note)
+std::string  DeferredNote::printDate(Note* note)
 {
-	std::cout << " | ОТЛОЖЕННАЯ | Дата: "; note->printDate();
+	return std::string(" | ОТЛОЖЕННАЯ | Дата: " + note->printDateS());
 }
 
 std::string DeferredNote::currentState() { return "DeferredNote"; }
@@ -141,9 +163,9 @@ void DeferredNote::next(Note* note)
 
 
 
-void ActiveNote::printDate(Note* note)
+std::string ActiveNote::printDate(Note* note)
 {
-	std::cout << " | АКТИВНАЯ | Дата: "; note->printDate();
+	return std::string(" | АКТИВНАЯ | Дата: " + note->printDateS());
 }
 
 std::string ActiveNote::currentState() { return "ActiveNote"; }
@@ -168,9 +190,9 @@ void ActiveNote::next(Note* note)
 
 
 
-void CompletedNote::printDate(Note* note)
+std::string  CompletedNote::printDate(Note* note)
 {
-	std::cout << " | ЗАВЕРШЕННОЕ | Дата: "; note->printDate();
+	return std::string(" | ЗАВЕРШЕННОЕ | Дата: " + note->printDateS());
 }
 
 std::string CompletedNote::currentState() { return "CompletedNote"; }

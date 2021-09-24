@@ -2,8 +2,47 @@
 #include <string>
 #include <map>
 #include <iostream>
-
+#include <fstream>
 #include "Menu.h"
+
+void Manager::Load()
+{
+
+}
+
+void Manager::Save()
+{
+
+	ofstream out("Save\\AllNotes.txt"); //имена и количесво аккаунтов
+	if (out.is_open())
+	{
+		out << notes.size() << endl;
+		for (size_t i = 0; i < notes.size(); i++)
+		{
+			out << notes[i]->printCompr();
+		}
+	}
+	out.close();
+
+	for (size_t i = 0; i < notes.size(); i++)
+	{
+
+		std::string nameFile = "Save\\";
+		nameFile += notes[i]->currentState();
+		nameFile += ".txt";
+
+		cout << nameFile << endl;
+
+		ofstream out(nameFile);
+		if (out.is_open())
+		{
+			out << printNotes(notes[i]->currentState(), 0) << endl;
+
+		}
+		out.close();
+	}
+
+}
 
 void Manager::createNote()
 {
@@ -16,34 +55,41 @@ void Manager::createNote()
 
 void Manager::printAllNotes()
 {
-	printImportant();
-	printActivated();
-	printDeferrend();
-	printCompleted();
+	std::cout << printImportant();
+	std::cout << printActivated();
+	std::cout << printDeferrend();
+	std::cout << printCompleted();
 }
 
-void Manager::printNotes(std::string type, int color)
+std::string Manager::printNotes(std::string type, int color)
 {
+	std::string st;
 	for (auto& i : notes)
 	{
 		if (i->currentState() != type) continue;
+		if (i->isImportant() && color != 0) continue;
 
-		SetColor(color, 0);
-		i->print();
+		//Если color = 0, значит его вызывают для сохранения файла, сохраняет он сжатую версию.
+		if(color != 0) { SetColor(color, 0); st += i->print();}
+		else st += i->printCompr();
 	}
+	return st;
 }
 
-void Manager::printDeferrend() { printNotes("DeferredNote", 7); }
-void Manager::printActivated() { printNotes("ActiveNote", 15); }
-void Manager::printCompleted() { printNotes("CompletedNote", 8); }
 
-void Manager::printImportant()
+std::string  Manager::printDeferrend() { return printNotes("DeferredNote", 7); }
+std::string Manager::printActivated() { return printNotes("ActiveNote", 15); }
+std::string  Manager::printCompleted() { return  printNotes("CompletedNote", 8); }
+
+std::string  Manager::printImportant()
 {
+	std::string st;
 	for (auto& i : importance)
 	{
 		SetColor(6, 0);
-		i->print();
+		st += i->print();
 	}
+	return st;
 }
 
 void Manager::markAsImportant()
@@ -51,6 +97,56 @@ void Manager::markAsImportant()
 	int i = selectNotes();
 	importance.push_back(notes[i]);
 	notes[i]->markAsImportant();
+}
+
+void Manager::dateSearch()
+{
+	tm dateBuff;
+	std::cout << std::endl;
+	std::cout << "День: ";  std::cin >> dateBuff.tm_mday;
+	std::cout << "Месяц: "; std::cin >> dateBuff.tm_mon;
+	std::cout << "Год: "; std::cin >> dateBuff.tm_year;
+
+	for (auto& i : notes)
+	{
+		if (i->getDate().tm_mday == dateBuff.tm_mday
+			&& i->getDate().tm_mon == dateBuff.tm_mon
+			&& i->getDate().tm_year == dateBuff.tm_year)
+		{
+			cout << i->print();
+		}
+	}
+
+}
+
+void Manager::tagSearch()
+{
+	std::string tagBuff;
+	std::cout << "\nВведите тэг: # ";
+	std::getline(std::cin, tagBuff);
+
+	for (auto& i : notes)
+	{
+		if (i->getTag() == tagBuff)
+		{
+			cout << i->print();
+		}
+	}
+}
+
+void Manager::noteSearch()
+{
+	std::string noteBuff;
+	std::cout << "Введите заметку: ";
+	std::getline(std::cin, noteBuff);
+
+	for (auto& i : notes)
+	{
+		if (i->getNote() == noteBuff)
+		{
+			cout << i->print();
+		}
+	}
 }
 
 
@@ -61,7 +157,7 @@ int Manager::selectNotes()
 	std::vector<std::string> menuNotes;
 
 	for (auto& i : notes)
-		menuNotes.push_back(i->printS());
+		menuNotes.push_back(i->printCompr());
 
 	Menu mN(menuNotes, 1, 3);
 

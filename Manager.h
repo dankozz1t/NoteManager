@@ -8,20 +8,28 @@ class Manager
 	 std::vector<Note*> importance;
 
 	 int selectNotes();
-	 void printNotes(std::string type, int color);
+	 std::string printNotes(std::string type, int color);
 
 public:
+
+	void Load();
+	void Save();
 
 	void createNote();
 
 	void printAllNotes();
 
-	void printDeferrend();
-	void printActivated();
-	void printCompleted();
+	std::string  printDeferrend();
+	std::string printActivated();
+	std::string  printCompleted();
 
-	void printImportant();
+	std::string  printImportant();
 	void markAsImportant();
+
+	void dateSearch();
+	void tagSearch();
+	void noteSearch();
+
 
 	void previousNote();
 	void nextNote();
