@@ -18,6 +18,21 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\NoteManager.cpp" />
+    <ClCompile Include="src\Note.cpp" />
+    <ClCompile Include="src\NoteParser.cpp" />
+    <ClCompile Include="src\NoteState.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\LOGS.h" />
+    <ClInclude Include="src\NoteManager.h" />
+    <ClInclude Include="src\Menu.h" />
+    <ClInclude Include="src\Note.h" />
+    <ClInclude Include="src\NoteParser.h" />
+    <ClInclude Include="src\NoteState.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -138,17 +153,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Manager.cpp" />
-    <ClCompile Include="Note.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="LOGS.h" />
-    <ClInclude Include="Manager.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="Note.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
